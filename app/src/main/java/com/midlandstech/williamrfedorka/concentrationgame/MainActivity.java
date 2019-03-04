@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ConcentrationGame game;
     private List<String> stringList;
     private int buttonOne, buttonTwo, currentButton, current;
-    private boolean buttonsPressed, secondButtonPressed;
+    private boolean buttonOnePressed, buttonTwoPressed;
 
 
     @Override
@@ -96,49 +96,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetButtonStatus() {
-        buttonsPressed = false;
-        secondButtonPressed = false;
+        buttonOnePressed = false;
+        buttonTwoPressed = false;
     }
 
     public void checkForMatch() {
-        if(stringList.get(buttonOne) == stringList.get(buttonTwo)) {
+        if(stringList.get(buttonOne).equals(stringList.get(buttonTwo))) {
             Log.w("MainActivity", "They match!");
             if(game.getPlayersTurn() == 1) {
                 game.setPlayerOneScore(game.getPlayerOneScore() + 1);
                 playerOneScore.setText(Integer.toString(game.getPlayerOneScore()));
+                game.setPlayersTurn(2);
+                Log.w("MainActivity", "player 2 turn");
+            }
+            else if(game.getPlayersTurn() == 2) {
+                game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
+                playerTwoScore.setText(Integer.toString(game.getPlayerTwoScore()));
+                game.setPlayersTurn(1);
+                Log.w("MainActivity", "player 1 turn");
             }
             buttons[buttonOne].setEnabled(false);
             buttons[buttonTwo].setEnabled(false);
-            resetButtonStatus();
         }
-        else {
+        else if(!stringList.get(buttonOne).equals(stringList.get(buttonTwo))) {
+            Log.w("MainActivity", "They don't match");
+            if(game.getPlayersTurn() == 1) {
+                game.setPlayersTurn(2);
+                Log.w("MainActivity", "player 2 turn");
+            }
+            else if(game.getPlayersTurn() == 2) {
+                game.setPlayersTurn(1);
+                Log.w("MainActivity", "player 1 turn");
+            }
             buttons[buttonOne].setText("");
             buttons[buttonTwo].setText("");
-            Log.w("MainActivity", "They don't match");
-            resetButtonStatus();
         }
+        resetButtonStatus();
     }
 
     public void tilePressed() {
 
             Log.w("MainActivity", "button pressed");
 
-            if (buttonsPressed) {
+            if (buttonOnePressed && !buttonTwoPressed) {
                 buttonTwo = currentButton;
                 buttons[currentButton].setText(stringList.get(currentButton));
                 Log.w("MainActivity", "second button");
                 checkForMatch();
-                secondButtonPressed = true;
+                buttonTwoPressed = true;
             }
-
-            if (!buttonsPressed && !secondButtonPressed) {
+            else if (!buttonOnePressed && !buttonTwoPressed) {
                 buttonOne = currentButton;
                 buttons[currentButton].setText(stringList.get(currentButton));
                 Log.w("MainActivity", "first button");
+                buttonOnePressed = true;
             }
-
-            else
-                Log.w("MainActivity", "i dont know what to do");
+            else {
+                resetButtonStatus();
+            }
 
     }
 
