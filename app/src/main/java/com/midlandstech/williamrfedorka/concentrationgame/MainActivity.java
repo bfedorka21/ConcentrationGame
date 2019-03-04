@@ -101,20 +101,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tilePressed() {
-        Log.w("MainActivity", "button pressed");
-
         if (buttonOnePressed) {
+            Log.w("MainActivity", "second button pressed");
             buttonTwo = currentButton;
             buttons[buttonTwo].setText(stringList.get(buttonTwo));
             buttons[buttonOne].setEnabled(true);
-            Log.w("MainActivity", "second button");
+            buttons[buttonTwo].setText(stringList.get(buttonTwo));
             checkForMatch();
         }
         else if (!buttonOnePressed) {
+            Log.w("MainActivity", "first button pressed");
             buttonOne = currentButton;
             buttons[buttonOne].setText(stringList.get(buttonOne));
             buttons[buttonOne].setEnabled(false);
-            Log.w("MainActivity", "first button");
             buttonOnePressed = true;
         }
         else {
