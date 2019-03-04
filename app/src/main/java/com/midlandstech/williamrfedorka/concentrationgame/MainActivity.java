@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int rows = 5;
     public static final int columns = 4;
 
-    private TextView playerOneLbl, playerTwoLbl, playerOneScore, playerTwoScore;
+    private TextView playerOneLbl, playerTwoLbl, playerOneScore, playerTwoScore, space, spaceTwo;
     private Button[] buttons;
     private Button play, reset;
     private ConcentrationGame game;
@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         reset.setOnClickListener(ch);
         gridLayout.addView(reset, w, w);
 
+        space = new TextView(this);
+        gridLayout.addView(space, w, w);
+
+        spaceTwo = new TextView(this);
+        gridLayout.addView(spaceTwo, w, w);
+
         playerOneLbl = new TextView(this);
         playerOneLbl.setText("Player One:");
         gridLayout.addView(playerOneLbl, w, w);
@@ -92,12 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
         current = 0;
         game.reset();
-        resetButtonStatus();
-    }
-
-    public void resetButtonStatus() {
         buttonOnePressed = false;
-        buttonTwoPressed = false;
     }
 
     public void tilePressed() {
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             buttons[buttonTwo].setText(stringList.get(buttonTwo));
             Log.w("MainActivity", "second button");
             checkForMatch();
-            buttonTwoPressed = true;
         }
         else if (!buttonOnePressed && !buttonTwoPressed) {
             buttonOne = currentButton;
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             buttonOnePressed = true;
         }
         else {
-            resetButtonStatus();
+           buttonOnePressed = false;
         }
 
     }
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             buttons[buttonOne].setText("");
             buttons[buttonTwo].setText("");
         }
-        resetButtonStatus();
+        buttonOnePressed = false;
     }
 
     public void giveScore() {
