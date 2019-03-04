@@ -100,21 +100,32 @@ public class MainActivity extends AppCompatActivity {
         buttonTwoPressed = false;
     }
 
+    public void tilePressed() {
+        Log.w("MainActivity", "button pressed");
+
+        if (buttonOnePressed && !buttonTwoPressed) {
+            buttonTwo = currentButton;
+            buttons[buttonTwo].setText(stringList.get(buttonTwo));
+            Log.w("MainActivity", "second button");
+            checkForMatch();
+            buttonTwoPressed = true;
+        }
+        else if (!buttonOnePressed && !buttonTwoPressed) {
+            buttonOne = currentButton;
+            buttons[buttonOne].setText(stringList.get(buttonOne));
+            Log.w("MainActivity", "first button");
+            buttonOnePressed = true;
+        }
+        else {
+            resetButtonStatus();
+        }
+
+    }
+
     public void checkForMatch() {
         if(stringList.get(buttonOne).equals(stringList.get(buttonTwo))) {
             Log.w("MainActivity", "They match!");
-            if(game.getPlayersTurn() == 1) {
-                game.setPlayerOneScore(game.getPlayerOneScore() + 1);
-                playerOneScore.setText(Integer.toString(game.getPlayerOneScore()));
-                game.setPlayersTurn(2);
-                Log.w("MainActivity", "player 2 turn");
-            }
-            else if(game.getPlayersTurn() == 2) {
-                game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
-                playerTwoScore.setText(Integer.toString(game.getPlayerTwoScore()));
-                game.setPlayersTurn(1);
-                Log.w("MainActivity", "player 1 turn");
-            }
+            giveScore();
             buttons[buttonOne].setEnabled(false);
             buttons[buttonTwo].setEnabled(false);
         }
@@ -134,27 +145,19 @@ public class MainActivity extends AppCompatActivity {
         resetButtonStatus();
     }
 
-    public void tilePressed() {
-
-            Log.w("MainActivity", "button pressed");
-
-            if (buttonOnePressed && !buttonTwoPressed) {
-                buttonTwo = currentButton;
-                buttons[currentButton].setText(stringList.get(currentButton));
-                Log.w("MainActivity", "second button");
-                checkForMatch();
-                buttonTwoPressed = true;
-            }
-            else if (!buttonOnePressed && !buttonTwoPressed) {
-                buttonOne = currentButton;
-                buttons[currentButton].setText(stringList.get(currentButton));
-                Log.w("MainActivity", "first button");
-                buttonOnePressed = true;
-            }
-            else {
-                resetButtonStatus();
-            }
-
+    public void giveScore() {
+        if(game.getPlayersTurn() == 1) {
+            game.setPlayerOneScore(game.getPlayerOneScore() + 1);
+            playerOneScore.setText(Integer.toString(game.getPlayerOneScore()));
+            game.setPlayersTurn(2);
+            Log.w("MainActivity", "player 2 turn");
+        }
+        else if(game.getPlayersTurn() == 2) {
+            game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
+            playerTwoScore.setText(Integer.toString(game.getPlayerTwoScore()));
+            game.setPlayersTurn(1);
+            Log.w("MainActivity", "player 1 turn");
+        }
     }
 
     private class ClickHandler implements View.OnClickListener {
