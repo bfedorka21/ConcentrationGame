@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button play, reset;
     private ConcentrationGame game;
     private List<String> stringList;
-    private int buttonOne, buttonTwo, currentButton, current;
-    private boolean buttonOnePressed, buttonTwoPressed;
+    private int buttonOne, buttonTwo, currentButton;
+    private boolean buttonOnePressed;
 
 
     @Override
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             buttons[i].setText("");
         }
-        current = 0;
         game.reset();
         buttonOnePressed = false;
     }
@@ -104,15 +103,17 @@ public class MainActivity extends AppCompatActivity {
     public void tilePressed() {
         Log.w("MainActivity", "button pressed");
 
-        if (buttonOnePressed && !buttonTwoPressed) {
+        if (buttonOnePressed) {
             buttonTwo = currentButton;
             buttons[buttonTwo].setText(stringList.get(buttonTwo));
+            buttons[buttonOne].setEnabled(true);
             Log.w("MainActivity", "second button");
             checkForMatch();
         }
-        else if (!buttonOnePressed && !buttonTwoPressed) {
+        else if (!buttonOnePressed) {
             buttonOne = currentButton;
             buttons[buttonOne].setText(stringList.get(buttonOne));
+            buttons[buttonOne].setEnabled(false);
             Log.w("MainActivity", "first button");
             buttonOnePressed = true;
         }
