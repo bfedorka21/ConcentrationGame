@@ -49,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
         play = new Button(this);
         play.setText("Play");
         play.setOnClickListener(ch);
-        gridLayout.addView(play, w, w);
+        gridLayout.addView(play, w, w/2);
 
         reset = new Button(this);
         reset.setText("Reset");
         reset.setOnClickListener(ch);
-        gridLayout.addView(reset, w, w);
+        gridLayout.addView(reset, w, w/2);
 
         space = new TextView(this);
-        gridLayout.addView(space, w, w);
+        gridLayout.addView(space, w, w/2);
 
         spaceTwo = new TextView(this);
-        gridLayout.addView(spaceTwo, w, w);
+        gridLayout.addView(spaceTwo, w, w/2);
 
         playerOneLbl = new TextView(this);
         playerOneLbl.setText("Player One:");
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             buttons[i].setText("");
         }
         reset();
+
         Log.w("MainActivity", "player 1 turn");
     }
 
@@ -96,13 +97,16 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             buttons[i].setText("");
         }
-        game.reset();
+        playerOneScore.setText("0");
+        playerTwoScore.setText("0");
         buttonOnePressed = false;
+        game.reset();
     }
 
     public void tilePressed() {
         if (buttonOnePressed) {
             Log.w("MainActivity", "second button pressed");
+
             buttonTwo = currentButton;
             buttons[buttonTwo].setText(stringList.get(buttonTwo));
             buttons[buttonOne].setEnabled(true);
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (!buttonOnePressed) {
             Log.w("MainActivity", "first button pressed");
+
             buttonOne = currentButton;
             buttons[buttonOne].setText(stringList.get(buttonOne));
             buttons[buttonOne].setEnabled(false);
@@ -150,12 +155,14 @@ public class MainActivity extends AppCompatActivity {
             game.setPlayerOneScore(game.getPlayerOneScore() + 1);
             playerOneScore.setText(Integer.toString(game.getPlayerOneScore()));
             game.setPlayersTurn(2);
+
             Log.w("MainActivity", "player 2 turn");
         }
         else if(game.getPlayersTurn() == 2) {
             game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
             playerTwoScore.setText(Integer.toString(game.getPlayerTwoScore()));
             game.setPlayersTurn(1);
+
             Log.w("MainActivity", "player 1 turn");
         }
     }
